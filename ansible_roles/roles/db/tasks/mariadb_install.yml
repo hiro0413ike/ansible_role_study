@@ -1,0 +1,15 @@
+---
+- name: check file the mariadb repository
+  stat:
+    path: "/etc/yum.repo.d/mariadb.repo"
+  register: mariadb_repo_result
+
+- name: MariaDB setup with specified version "{{ db.mariadb.version }}"
+  shell: curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash -s -- --mariadb-server-version=mariadb-{{ db.mariadb.version }}
+  when: mariadb_repo_result.stat.exists == false
+
+- name: install mariadb components
+  yum:
+    name: "{{ db.mariadb.Components }}"
+    state: present
+  notify: restart mariadb

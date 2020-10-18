@@ -1,0 +1,5 @@
+- name: mariadb install
+  import_tasks: mariadb_install.yml
+
+- name: wordpress db ,user create
+  import_tasks: db_user_cretate.yml

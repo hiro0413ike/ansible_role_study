@@ -1,0 +1,21 @@
+---
+- name: check install mysql-python
+  shell: "find / -type d -name *MySQL-python*"
+  check_mode: no
+  register: mysql_python_result
+
+- name: create db wordpress
+  mysql_db:
+    name: "{{ db.sql_db.db_name }}"
+    state: present
+  when: mysql_python_result.stdout != ""
+
+- name: create db user
+  no_log: true
+  mysql_user:
+    user: "{{ db.sql_db.user_name }}"
+    password: "{{ db.sql_db.password }}"
+    priv: 'wordpress.*:ALL,GRANT'
+    state: present
+    host: "{{ db.sql_db.connection_sorce_ip }}"
+  when: mysql_python_result.stdout != ""
