@@ -5,8 +5,7 @@ db:
       - mariadb-server
       - MySQL-python
     version: "10.1"
-  sql_db:
-    db_name: "wordpress"
-    user_name: "web_user"
-    password: "password"
-    connection_sorce_ip: "192.168.16.12"
+  db_name: "wordpress"
+  user_name: "web_user"
+  password: "password"
+  connection_sorce_ip: "192.168.16.12"
